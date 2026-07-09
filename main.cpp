@@ -63,6 +63,9 @@ int main(){
 		cout << "Which garden spot? (1-5)" << endl;
 		cin >> gardenSpot;
 		
+	//prevent replacing already existing flowers 
+	if(garden[gardenSpot - 1] == "Empty"){
+		
 		if (flowerChoice == '1'){//if player choose daisy, go to garden array,
 			garden[gardenSpot - 1] = "Daisy";// take player spot number, subtract 1 & store daisy there 
 			cout << "You planted a Daisy! " << endl;
@@ -91,7 +94,15 @@ int main(){
 			garden[gardenSpot - 1] = "Hibiscus";
 			cout << "You planted a Hibiscus! " << endl;
 		}
+		else{
+			cout << "That is not a flower option!" << endl;
+		}
 	}
+	else{ 
+		cout << "There is already a flower here!" << endl;
+	}
+	}
+	
 	
 	else if(choice == '3'){ //option 3
 		cout << "Eden goes to sleep... " << endl;
