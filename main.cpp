@@ -19,14 +19,14 @@ int main(){
 	cout << "The frog wakes up! " << endl;
 
 	char choice;
-	
 	string garden [5] = {
-		"Empty", "Empty", "Empty", "Empty", "Empty"
-	};
-	
+		"Empty", "Empty", "Empty", "Empty", "Empty" };
+	int growthStage[5] = {
+		0,0,0,0,0 };
+	int day = 1; //day counter
 	bool playing = true; //bool = true (yes) OR false (no)
-	while (playing){
 	
+	while (playing){
 	cout << endl; //add options for what Eden does
 	cout << "What should Eden do first? " << endl;
 	cout << "1. Look at garden" << endl;
@@ -43,7 +43,17 @@ int main(){
 		cout << " ---- Eden's Garden ----" << endl;
 		
 		for(int i = 0; i < 5; i++){
-			cout << i+1 << ". " << garden[i] << endl;
+			cout << i+1 << ". " << garden[i];
+			if(growthStage[i] == 1){ //Day 1
+				cout << " (Seed)";
+			}
+			else if(growthStage[i] == 2){ //Day 2
+				cout << " (Sprout)";
+			}
+			else if(growthStage[i] >= 3){ //Day 3
+				cout << " (Bloomed)";
+			}
+			cout << endl;
 		}
 	}
 	else if(choice == '2'){//option 2
@@ -68,31 +78,38 @@ int main(){
 		
 		if (flowerChoice == '1'){//if player choose daisy, go to garden array,
 			garden[gardenSpot - 1] = "Daisy";// take player spot number, subtract 1 & store daisy there 
-			cout << "You planted a Daisy! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Daisy seed! " << endl;
 		}
 		else if (flowerChoice == '2'){
 			garden[gardenSpot - 1] = "Tulip";
-			cout << "You planted a Tulip! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Tulip seed! " << endl;
 		}
 		else if (flowerChoice == '3'){
 			garden[gardenSpot - 1] = "Rose";
-			cout << "You planted a Rose! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Rose seed! " << endl;
 		}
 		else if (flowerChoice == '4'){
 			garden[gardenSpot - 1] = "Bellflower";
-			cout << "You planted a Bellflower! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Bellflower seed! " << endl;
 		}
 		else if (flowerChoice == '5'){
 			garden[gardenSpot - 1] = "Sunflower";
-			cout << "You planted a Sunflower! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Sunflower seed! " << endl;
 		}
 		else if (flowerChoice == '6'){
 			garden[gardenSpot - 1] = "Lavender";
-			cout << "You planted a Lavender! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Lavender seed! " << endl;
 		}
 		else if (flowerChoice == '7'){
 			garden[gardenSpot - 1] = "Hibiscus";
-			cout << "You planted a Hibiscus! " << endl;
+			growthStage[gardenSpot - 1] = 1;
+			cout << "You planted a Hibiscus seed! " << endl;
 		}
 		else{
 			cout << "That is not a flower option!" << endl;
@@ -106,7 +123,16 @@ int main(){
 	
 	else if(choice == '3'){ //option 3
 		cout << "Eden goes to sleep... " << endl;
+		day++;
+		
+		for(int i = 0; i < 5; i++){
+			if(growthStage[i] > 0){
+				growthStage[i]++;
+			}
+		}
+		cout << "Day " << day << " begins!" << endl;
 	}
+	
 	else if (choice == '4'){ //option 4
 		cout << "Thanks for helping Eden's Garden!" << endl;
 		playing = false;
