@@ -24,7 +24,7 @@ void lookAtGarden(string garden[], int growthStage[]){ //choice 1
 	}
 }
 
-void plantFlower(string garden[], int growthStage[]){ //choice 2
+void plantFlower(string garden[], int growthStage[], int seedInventory[], string flowerNames[]){ //choice 2
 	
 	cout << "What flower would you like to plant? " << endl;
 		
@@ -37,6 +37,12 @@ void plantFlower(string garden[], int growthStage[]){ //choice 2
 		cout << "6. Lavender " << endl;
 		cout << "7. Hibiscus " << endl;
 		cin >> flowerChoice; 
+		//check for error
+		if(flowerChoice < '1' || flowerChoice > '7'){
+			cout << "Aww silly! That's not a flower choice! " << endl;
+			return;
+		}
+		int flowerIndex = flowerChoice - '1';
 		
 		int gardenSpot;
 		cout << "Which garden spot? (1-5)" << endl;
@@ -44,60 +50,96 @@ void plantFlower(string garden[], int growthStage[]){ //choice 2
 		
 	//prevent replacing already existing flowers 
 	if(garden[gardenSpot - 1] == "Empty"){
-		if (flowerChoice == '1'){//if player choose daisy, go to garden array,
-			garden[gardenSpot - 1] = "Daisy";// take player spot number, subtract 1 & store daisy there 
+		
+		if(seedInventory[flowerIndex] > 0){
+				
+			garden[gardenSpot - 1] = flowerNames[flowerIndex];
 			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Daisy seed! )" << endl;
-			cout << "I hope its pretty Ribbit! " << endl;
+			seedInventory[flowerIndex]--;
+				
+			cout << "(You planted a " << flowerNames[flowerIndex] << " seed!)" << endl;
+			cout << "I hope its becomes very pretty! Ribbit! " << endl;
+			cout << endl;
+			cout << "We have " << seedInventory[flowerIndex] << " seeds left." << endl;		
 		}
-		else if (flowerChoice == '2'){
-			garden[gardenSpot - 1] = "Tulip";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Tulip seed!) " << endl;
-			cout << "Tulip's are my favorite! Or was it Bellflowers? " << endl;
+		else{//inventory restriction
+			cout << "Oh no, little frog! We don't have that seed..." << endl;
+			cout << "Maybe we should visit Choco the Chipmunk's shop!" << endl;			}
 		}
-		else if (flowerChoice == '3'){
-			garden[gardenSpot - 1] = "Rose";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Rose seed!) " << endl;
-			cout << "You chose a rose, I sure hope it grows!" << endl;
-		}
-		else if (flowerChoice == '4'){
-			garden[gardenSpot - 1] = "Bellflower";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Bellflower seed!) " << endl;
-			cout << "Why is it called a bellflower if I cant hear any bells?" << endl;
-		}
-		else if (flowerChoice == '5'){
-			garden[gardenSpot - 1] = "Sunflower";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Sunflower seed!) " << endl;
-			cout << "The sun must have its favorite flower Ribbit! " << endl;
-		}
-		else if (flowerChoice == '6'){
-			garden[gardenSpot - 1] = "Lavender";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Lavender seed!) " << endl;
-			cout << "Lavender is my favorite color! " << endl;
-		}
-		else if (flowerChoice == '7'){
-			garden[gardenSpot - 1] = "Hibiscus";
-			growthStage[gardenSpot - 1] = 1;
-			cout << "(You planted a Hibiscus seed! )" << endl;
-			cout << "Hibiscus flowers remind me of summer! " << endl;
-		}
-		else{
-			cout << "Aw silly! That's not a flower choice!" << endl;
-		}
-	}
+	
+		//cout << "Tulip's are my favorite! Or was it Bellflowers? " << endl;
+		//cout << "You chose a rose, I sure hope it grows!" << endl;
+		//cout << "Why is it called a bellflower if I cant hear any bells?" << endl;
+		//cout << "The sun must have its favorite flower Ribbit! " << endl;
+		//cout << "Lavender is my favorite color! " << endl;
+		//cout << "Hibiscus flowers remind me of summer! " << endl;
 	else{ 
 		cout << "Ribbit! Oh no! There is already a flower here! Can you place it somewhere else " << endl;
 	}
 }
 
-void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
-	int gardenSpot;
+void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 	
+	cout << endl;
+	cout << "-----------------" << endl;
+	cout << "Choco's the Chipmunk's Flower Shop " << endl;
+	cout << "-----------------"<< endl;
+	cout << endl;
+	cout << "Choco: Hi! Hi! Hiya! Welcome to MY flower shop! Chip Chip! " << endl;
+	cout << endl;
+	cout << "Choco: Take a look around!! Chip Chip! " << endl;
+	cout << endl;
+	cout << "Eden: Thank you Choco! " << endl;
+	cout << endl;
+	cout << "Hey little frog, do you see anything interesting? " << endl;
+	cout << endl;
+	
+	int chocoChoice;
+	//Choco the Chipmunk shop options
+	for(int i = 0; i < 7; i++){
+		cout << i + 1 << ". Buy " << flowerNames[i] << " Seeds " << endl;
+	}
+	cout << "8. Leave Shop " << endl;
+	cin >> chocoChoice;
+	int flowerIndex = chocoChoice - 1;
+	
+	if(chocoChoice >= 1 && chocoChoice <= 7){
+	cout << "(" << flowerNames[flowerIndex] << " seeds cost 1 coin.)" << endl;
+		int amount;
+		cout << "Choco: How many would you like to buy? " << endl;
+		cin >> amount;
+		
+		int seedprice = 1;
+		int totalCost = seedprice * amount;
+		
+		if(coins >= totalCost){
+			cout << "Choco: Chip Chip! You can afford that! " << endl;
+			cout << "Choco: That will cost " << totalCost << " coins." << endl;
+			if(amount > 0){
+				cout << "Choco: Here is your " << amount << " " << flowerNames[flowerIndex] << " seeds! Chip Chip!" << endl;
+				coins -= totalCost;
+				seedInventory[flowerIndex] += amount;
+				cout << "(You bought " << amount << " " << flowerNames[flowerIndex] << "seeds!) " << endl;
+				cout << flowerNames[flowerIndex] << " Seeds: " << seedInventory[flowerIndex] << endl;
+				cout << "Coins: " << coins << endl;
+			
+			}
+			else if(amount == 0){
+				cout << "Eden: Ribbit! oh you changed your mind. That's okay!" << endl;
+				cout << endl;
+				cout << "Choco: Okay for you, less money for me Chip Chip... " << endl;
+			}
+		}
+		else{
+			cout << "Choco: Oh... You don't have enough coins for that haha! Chip Chip!" << endl;
+		}
+		
+	}
+}
+
+void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
+	
+	int gardenSpot;
 	cout << "Which garden spot would you like to harvest? (1-5)" << endl;
 	cin >> gardenSpot;
 	int flowerValue = 0; 
@@ -139,7 +181,7 @@ void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
 	}
 }
 
-void sleep(int growthStage[], int &day){//choice 4
+void sleep(int growthStage[], int &day){//choice 5
 
 	cout << "I'm feeling so sleepy. " << endl;
 	cout << "Hopefully tomorrow is an even better day for our garden! " << endl;
@@ -160,6 +202,8 @@ int main(){
 	cout << "Ribbit! My name is Eden the Frog! " << endl;
 	cout << "Can you help me with my garden?" << endl;
 	int coins = 10;
+	int seedInventory[7] = {2,0,0,0,0,0,0}; //# of daisy seeds, # of tulip seeds, etc..
+	string flowerNames[7] = {"Daisy", "Tulip", "Rose", "Bellflower", "Sunflower", "Lavender", "Hibiscus"};
 	cout << endl;
 	cout << "Coins " << coins << endl;
 	
@@ -188,8 +232,9 @@ int main(){
 	cout << "1. Look at garden" << endl;
 	cout << "2. Plant flower seeds " << endl;
 	cout << "3. Harvest flowers " << endl;
-	cout << "4. Sleep " << endl;
-	cout << "5. Quit " << endl;
+	cout << "4. Visit Choco the Chipmunk's flower shop " << endl;
+	cout << "5. Sleep " << endl;
+	cout << "6. Quit " << endl;
 	cout << endl; 
 	cout << "(What should Eden do?)" << endl;
 	cin >> choice;
@@ -198,18 +243,19 @@ int main(){
 		lookAtGarden(garden,growthStage);
 	}
 	else if(choice == '2'){//option 2
-		plantFlower(garden,growthStage);
+		plantFlower(garden, growthStage, seedInventory, flowerNames);
 	}
-	
 	else if(choice == '3'){//option 3
 		harvestFlower(garden, growthStage, coins);
 	}
-	
-	else if(choice == '4'){ //option 4
-		sleep(growthStage, day);
+	else if(choice == '4'){//option 4
+		flowerShop(coins, seedInventory, flowerNames);
 	}
 	
-	else if (choice == '5'){ //option 5
+	else if(choice == '5'){ //option 5
+		sleep(growthStage, day);
+	}
+	else if(choice == '6'){ //option 5
 		cout << "Thanks for me with my garden! Come back soon, Ribbit!" << endl;
 		playing = false;
 	}
