@@ -180,6 +180,16 @@ void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
 	}
 }
 
+void viewInventory (int seedInventory[], string flowerNames[]){
+
+	cout << endl;
+	cout << "---- Eden's Inventory ----" << endl;
+	
+	for(int i = 0; i < 7; i++){
+		cout << flowerNames[i] << " Seeds: " << seedInventory[i] << endl;
+	}
+}
+
 void sleep(int growthStage[], int &day){//choice 5
 
 	cout << "I'm feeling so sleepy. " << endl;
@@ -232,8 +242,9 @@ int main(){
 	cout << "2. Plant flower seeds " << endl;
 	cout << "3. Harvest flowers " << endl;
 	cout << "4. Visit Choco the Chipmunk's flower shop " << endl;
-	cout << "5. Sleep " << endl;
-	cout << "6. Quit " << endl;
+	cout << "5. View Inventory " << endl;
+	cout << "6. Sleep " << endl;
+	cout << "7. Quit " << endl;
 	cout << endl; 
 	cout << "(What should Eden do?)" << endl;
 	cin >> choice;
@@ -251,10 +262,13 @@ int main(){
 		flowerShop(coins, seedInventory, flowerNames);
 	}
 	
-	else if(choice == '5'){ //option 5
+	else if(choice == '5'){//option 5
+		viewInventory(seedInventory, flowerNames);
+	}
+	else if(choice == '6'){ //option 6
 		sleep(growthStage, day);
 	}
-	else if(choice == '6'){ //option 5
+	else if(choice == '7'){ //option 7
 		cout << "Thanks for me with my garden! Come back soon, Ribbit!" << endl;
 		playing = false;
 	}
