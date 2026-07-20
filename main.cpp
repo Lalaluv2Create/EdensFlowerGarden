@@ -28,25 +28,21 @@ void plantFlower(string garden[], int growthStage[], int seedInventory[], string
 	
 	cout << "What flower would you like to plant? " << endl;
 		
-		char flowerChoice;		
-		cout << "1. Daisy " << endl;
-		cout << "2. Tulip " << endl;
-		cout << "3. Rose " << endl;
-		cout << "4. Bellflower " << endl;
-		cout << "5. Sunflower " << endl;
-		cout << "6. Lavender " << endl;
-		cout << "7. Hibiscus " << endl;
-		cin >> flowerChoice; 
-		//check for error
-		if(flowerChoice < '1' || flowerChoice > '7'){
-			cout << "Aww silly! That's not a flower choice! " << endl;
-			return;
-		}
-		int flowerIndex = flowerChoice - '1';
+	char flowerChoice;		
+	for(int i = 0; i < 7; i++){
+		cout << i + 1 << ". " << flowerNames[i] << endl;
+	}
+	cin >> flowerChoice; 
+	//check for error
+	if(flowerChoice < '1' || flowerChoice > '7'){
+		cout << "Aww silly! That's not a flower choice! " << endl;
+		return;
+	}
+	int flowerIndex = flowerChoice - '1';
 		
-		int gardenSpot;
-		cout << "Which garden spot? (1-5)" << endl;
-		cin >> gardenSpot;
+	int gardenSpot;
+	cout << "Which garden spot? (1-5)" << endl;
+	cin >> gardenSpot;
 		
 	//prevent replacing already existing flowers 
 	if(garden[gardenSpot - 1] == "Empty"){
