@@ -110,12 +110,12 @@ void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 		
 		if(coins >= totalCost){
 			cout << "Choco: Chip Chip! You can afford that! " << endl;
-			cout << "Choco: That will cost " << totalCost << " coins." << endl;
+			cout << "Choco: That will cost " << totalCost << " coin(s)." << endl;
 			if(amount > 0){
 				cout << "Choco: Here is your " << amount << " " << flowerNames[flowerIndex] << " seeds! Chip Chip!" << endl;
 				coins -= totalCost;
 				seedInventory[flowerIndex] += amount;
-				cout << "(You bought " << amount << " " << flowerNames[flowerIndex] << "seeds!) " << endl;
+				cout << "(You bought " << amount << " " << flowerNames[flowerIndex] << " seeds!) " << endl;
 				cout << flowerNames[flowerIndex] << " Seeds: " << seedInventory[flowerIndex] << endl;
 				cout << "Coins: " << coins << endl;
 			
@@ -130,6 +130,9 @@ void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 			cout << "Choco: Oh... You don't have enough coins for that haha! Chip Chip!" << endl;
 		}
 		
+	}
+	else if(chocoChoice == 8){
+		cout << "Choco: Come again soon! Chipy! Chip Chip! " << endl;
 	}
 }
 
