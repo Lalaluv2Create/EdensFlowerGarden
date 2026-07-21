@@ -39,7 +39,7 @@ A cozy gardening game where you help Eden the Frog grow a beautiful flower garde
 - Vegetable Shop
 - Weather and Random Garden Events
 - Save / Load System
-- Future 2D remake in Gadot
+- Future 2D remake in Godot
 
 ## About This Project:
-This project is a part of my video game development portfolio while studying Computer Science and Studio Art. My goal is to practice c++, object-oriented programming, and game design by building a cozy game from the ground up before recreating it in Gadot.
+This project is a part of my video game development portfolio while studying Computer Science and Studio Art. My goal is to practice c++, object-oriented programming, and game design by building a cozy game from the ground up before recreating it in Godot.
