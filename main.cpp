@@ -4,6 +4,12 @@
 
 using namespace std;
 
+struct Flower{ //the blueprint for every flower 
+	
+	string name;
+	int value;
+};
+
 void lookAtGarden(string garden[], int growthStage[]){ //choice 1
 	
 	cout << endl;
@@ -24,13 +30,12 @@ void lookAtGarden(string garden[], int growthStage[]){ //choice 1
 	}
 }
 
-void plantFlower(string garden[], int growthStage[], int seedInventory[], string flowerNames[]){ //choice 2
+void plantFlower(string garden[], int growthStage[], int seedInventory[], Flower flowers[]){ //choice 2
 	
-	cout << "What flower would you like to plant? " << endl;
-		
+	cout << "What flower would you like to plant? " << endl;	
 	char flowerChoice;		
 	for(int i = 0; i < 7; i++){
-		cout << i + 1 << ". " << flowerNames[i] << endl;
+		cout << i + 1 << ". " << flowers[i].name << endl;
 	}
 	cin >> flowerChoice; 
 	//check for error
@@ -49,11 +54,11 @@ void plantFlower(string garden[], int growthStage[], int seedInventory[], string
 		
 		if(seedInventory[flowerIndex] > 0){
 				
-			garden[gardenSpot - 1] = flowerNames[flowerIndex];
+			garden[gardenSpot - 1] = flowers[flowerIndex].name;
 			growthStage[gardenSpot - 1] = 1;
 			seedInventory[flowerIndex]--;
 				
-			cout << "(You planted a " << flowerNames[flowerIndex] << " seed!)" << endl;
+			cout << "(You planted a " << flowers[flowerIndex].name << " seed!)" << endl;
 			cout << "I hope its becomes very pretty! Ribbit! " << endl;
 			cout << endl;
 			cout << "We have " << seedInventory[flowerIndex] << " seeds left." << endl;		
@@ -74,7 +79,7 @@ void plantFlower(string garden[], int growthStage[], int seedInventory[], string
 	}
 }
 
-void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
+void flowerShop(int &coins, int seedInventory[], Flower flowers[]){ //choice 4
 	
 	cout << endl;
 	cout << "-----------------" << endl;
@@ -93,14 +98,14 @@ void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 	int chocoChoice;
 	//Choco the Chipmunk shop options
 	for(int i = 0; i < 7; i++){
-		cout << i + 1 << ". Buy " << flowerNames[i] << " Seeds " << endl;
+		cout << i + 1 << ". Buy " << flowers[i].name << " Seeds " << endl;
 	}
 	cout << "8. Leave Shop " << endl;
 	cin >> chocoChoice;
 	int flowerIndex = chocoChoice - 1;
 	
 	if(chocoChoice >= 1 && chocoChoice <= 7){
-	cout << "(" << flowerNames[flowerIndex] << " seeds cost 1 coin.)" << endl;
+	cout << "(" << flowers[flowerIndex].name << " seeds cost 1 coin.)" << endl;
 		int amount;
 		cout << "Choco: How many would you like to buy? " << endl;
 		cin >> amount;
@@ -112,11 +117,11 @@ void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 			cout << "Choco: Chip Chip! You can afford that! " << endl;
 			cout << "Choco: That will cost " << totalCost << " coin(s)." << endl;
 			if(amount > 0){
-				cout << "Choco: Here is your " << amount << " " << flowerNames[flowerIndex] << " seeds! Chip Chip!" << endl;
+				cout << "Choco: Here is your " << amount << " " << flowers[flowerIndex].name << " seeds! Chip Chip!" << endl;
 				coins -= totalCost;
 				seedInventory[flowerIndex] += amount;
-				cout << "(You bought " << amount << " " << flowerNames[flowerIndex] << " seeds!) " << endl;
-				cout << flowerNames[flowerIndex] << " Seeds: " << seedInventory[flowerIndex] << endl;
+				cout << "(You bought " << amount << " " << flowers[flowerIndex].name << " seeds!) " << endl;
+				cout << flowers[flowerIndex].name << " Seeds: " << seedInventory[flowerIndex] << endl;
 				cout << "Coins: " << coins << endl;
 			
 			}
@@ -136,7 +141,7 @@ void flowerShop(int &coins, int seedInventory[], string flowerNames[]){
 	}
 }
 
-void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
+void harvestFlower(string garden[], int growthStage[], int &coins, Flower flowers[]){//choice 3
 	
 	int gardenSpot;
 	cout << "Which garden spot would you like to harvest? (1-5)" << endl;
@@ -146,26 +151,10 @@ void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
 	if(growthStage[gardenSpot - 1] >= 3){
 		cout << "You harvested a " << garden[gardenSpot - 1] << "!" << endl;
 		
-		if(garden[gardenSpot - 1] == "Daisy"){
-			flowerValue = 3;
-		}
-		else if(garden[gardenSpot - 1] == "Tulip"){
-			flowerValue = 5;
-		}
-		else if(garden[gardenSpot - 1] == "Rose"){
-			flowerValue = 8;
-		}
-		else if(garden[gardenSpot - 1] == "Bellflower"){
-			flowerValue = 6;
-		}
-		else if(garden[gardenSpot - 1] == "Sunflower"){
-			flowerValue = 10;
-		}
-		else if(garden[gardenSpot - 1] == "Lavender"){
-			flowerValue = 7;
-		}
-		else if(garden[gardenSpot - 1] == "Hibiscus"){
-			flowerValue = 9;
+		for(int i = 0; i < 7; i++){
+			if(garden[gardenSpot - 1] == flowers[i].name){
+				flowerValue = flowers[i].value;
+			}
 		}
 		
 		garden[gardenSpot - 1] = "Empty"; //after picking, return garden spot to empty
@@ -180,13 +169,13 @@ void harvestFlower(string garden[], int growthStage[], int &coins){//choice 3
 	}
 }
 
-void viewInventory (int seedInventory[], string flowerNames[]){
+void viewInventory(int seedInventory[], Flower flowers[]){
 
 	cout << endl;
 	cout << "---- Eden's Inventory ----" << endl;
 	
 	for(int i = 0; i < 7; i++){
-		cout << flowerNames[i] << " Seeds: " << seedInventory[i] << endl;
+		cout << flowers[i].name << " Seeds: " << seedInventory[i] << endl;
 	}
 }
 
@@ -212,7 +201,16 @@ int main(){
 	cout << "Can you help me with my garden?" << endl;
 	int coins = 10;
 	int seedInventory[7] = {2,0,0,0,0,0,0}; //# of daisy seeds, # of tulip seeds, etc..
-	string flowerNames[7] = {"Daisy", "Tulip", "Rose", "Bellflower", "Sunflower", "Lavender", "Hibiscus"};
+	Flower flowers[7] = {
+		{"Daisy", 3},
+		{"Tulip", 5},
+		{"Rose", 8},
+		{"Bellflower", 6},
+		{"Sunflower", 10},
+		{"Lavender", 7},
+		{"Hibiscus", 9},
+	};
+	
 	cout << endl;
 	cout << "Coins " << coins << endl;
 	
@@ -253,17 +251,16 @@ int main(){
 		lookAtGarden(garden,growthStage);
 	}
 	else if(choice == '2'){//option 2
-		plantFlower(garden, growthStage, seedInventory, flowerNames);
+		plantFlower(garden, growthStage, seedInventory, flowers);
 	}
 	else if(choice == '3'){//option 3
-		harvestFlower(garden, growthStage, coins);
+		harvestFlower(garden, growthStage, coins, flowers);
 	}
 	else if(choice == '4'){//option 4
-		flowerShop(coins, seedInventory, flowerNames);
+		flowerShop(coins, seedInventory, flowers);
 	}
-	
 	else if(choice == '5'){//option 5
-		viewInventory(seedInventory, flowerNames);
+		viewInventory(seedInventory, flowers);
 	}
 	else if(choice == '6'){ //option 6
 		sleep(growthStage, day);
