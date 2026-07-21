@@ -7,6 +7,7 @@ using namespace std;
 struct Flower{ //the blueprint for every flower 
 	
 	string name;
+	int seedCost;
 	int value;
 };
 
@@ -105,13 +106,11 @@ void flowerShop(int &coins, int seedInventory[], Flower flowers[]){ //choice 4
 	int flowerIndex = chocoChoice - 1;
 	
 	if(chocoChoice >= 1 && chocoChoice <= 7){
-	cout << "(" << flowers[flowerIndex].name << " seeds cost 1 coin.)" << endl;
+	cout << "(" << flowers[flowerIndex].name << " seeds cost " << flowers[flowerIndex].seedCost << " coin(s))" << endl;
 		int amount;
 		cout << "Choco: How many would you like to buy? " << endl;
 		cin >> amount;
-		
-		int seedprice = 1;
-		int totalCost = seedprice * amount;
+		int totalCost = flowers[flowerIndex].seedCost * amount;
 		
 		if(coins >= totalCost){
 			cout << "Choco: Chip Chip! You can afford that! " << endl;
@@ -202,13 +201,13 @@ int main(){
 	int coins = 10;
 	int seedInventory[7] = {2,0,0,0,0,0,0}; //# of daisy seeds, # of tulip seeds, etc..
 	Flower flowers[7] = {
-		{"Daisy", 3},
-		{"Tulip", 5},
-		{"Rose", 8},
-		{"Bellflower", 6},
-		{"Sunflower", 10},
-		{"Lavender", 7},
-		{"Hibiscus", 9},
+		{"Daisy", 1, 3},
+		{"Tulip", 1, 5},
+		{"Rose", 3, 8},
+		{"Bellflower", 1, 6},
+		{"Sunflower", 1, 10},
+		{"Lavender", 1, 7},
+		{"Hibiscus", 1, 9},
 	};
 	
 	cout << endl;
