@@ -3,8 +3,11 @@ A cozy gardening game where you help Eden the Frog grow a beautiful flower garde
 
 ## Current Features:
 - Welcome Screen
-- Meet Eden the Frog
+- New Game / Load Game System
 - Main Menu System
+- Game Loop
+- Coin System
+- 5 Slot Garden
 - Planting Flowers:
 -     Daisy
 -     Tulip
@@ -18,12 +21,21 @@ A cozy gardening game where you help Eden the Frog grow a beautiful flower garde
 -     Sprout
 -     Bloomed
 - Day Progression by Sleeping
-- Harvest Fully Grown Flowers
+- Harvest Bloomed Flowers
 - Coin Reward System
 - Visit Choco the Chipmunk's Flower Shop
-- Purchase Flower Seeds
+  - Purchase Flower Seeds
+  - Different seed costs
 - Seed Inventory System
-- 5 Slot Garden
+- Flower Journal:
+  -Discover new flowers
+  -Track harvest count
+- Save and Load System:
+  - Saves coins
+  - Saves day progression
+  - Saves state of garden
+  - Saves inventory
+  - Saves flower discoveries
 - Object-Oriented Flower Data Using A Custom Flower Struct 
 
 ## Built with:
@@ -33,12 +45,11 @@ A cozy gardening game where you help Eden the Frog grow a beautiful flower garde
 - GitHub
 
 ## Planned Features:
-- Flower Collection Book
-- Individual Seed Prices
 - Fruit Shop
 - Vegetable Shop
 - Weather and Random Garden Events
-- Save / Load System
+- More interactions with Eden and characters
+- Improve Game Polish
 - Future 2D remake in Godot
 
 ## About This Project:
