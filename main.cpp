@@ -1,6 +1,7 @@
 //Eden's Flower Garden
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -10,7 +11,55 @@ struct Flower{ //the blueprint for every flower
 	int seedCost;
 	int value;
 	bool discovered;
+	int harvestCount;
 };
+
+void saveGame(int coins, int day, string garden[], int growthStage[], int seedInventory[], Flower flowers[]){//option 8
+	
+	ofstream saveFile("eden_save.txt");
+	saveFile << coins << endl;
+	saveFile << day << endl;
+	saveFile << endl;
+	for(int i = 0; i < 5; i++){
+		saveFile << garden[i] << endl;
+	}
+	saveFile << endl;
+	for(int i = 0; i < 5; i++){
+		saveFile << growthStage[i] << endl;
+	}
+	saveFile << endl;
+	for(int i = 0; i < 7; i++){
+		saveFile << seedInventory[i] << endl;
+	}
+	saveFile << endl;
+	for(int i = 0; i < 7; i++){
+		saveFile << flowers[i].discovered << endl;
+		saveFile << flowers[i].harvestCount << endl;
+	}
+	saveFile << endl;
+}
+
+void loadGame(int &coins, int &day, string garden[], int growthStage[], int seedInventory[], Flower flowers[]){
+	
+	ifstream loadFile("eden_save.txt");
+	
+	loadFile >> coins;
+	loadFile >> day;
+	
+	for(int i = 0; i < 5; i++){
+		loadFile >> garden[i];
+	}
+	for(int i = 0; i < 5; i++){
+		loadFile >> growthStage[i];
+	}
+	for(int i = 0; i < 7; i++){
+		loadFile >> seedInventory[i];
+	}
+	for(int i = 0; i < 7; i++){
+		loadFile >> flowers[i].discovered;
+		loadFile >> flowers[i].harvestCount;
+	}
+}
 
 void lookAtGarden(string garden[], int growthStage[]){ //choice 1
 	
@@ -158,6 +207,10 @@ void harvestFlower(string garden[], int growthStage[], int &coins, Flower flower
 		for(int i = 0; i < 7; i++){
 			if(garden[gardenSpot - 1] == flowers[i].name){
 				flowerValue = flowers[i].value;
+				//increase every harvest
+				flowers[i].harvestCount++;
+				
+				//only happens with first harvest 
 				if(flowers[i].discovered == false){
 					flowers[i].discovered = true;
 					cout << "Eden: A new flower was added to my journal! " << endl;
@@ -219,6 +272,7 @@ void viewFlowerJournal(Flower flowers[]){//choice 7
 			cout << flowers[i].name << endl;
 			cout << "Seed Cost: " << flowers[i].seedCost << endl;
 			cout << "Sell Value: " << flowers[i].value << endl;
+			cout << "Harvested: " << flowers[i].harvestCount << endl;
 			cout << endl;
 		}
 		else{
@@ -232,35 +286,50 @@ int main(){
 	
 	cout << "Welcome to Eden's Flower Garden!" << endl;
 	cout << endl;
-	cout << "Ribbit! My name is Eden the Frog! " << endl;
-	cout << "Can you help me with my garden?" << endl;
+	
+	//game data 
 	int coins = 10;
 	int seedInventory[7] = {2,0,0,0,0,0,0}; //# of daisy seeds, # of tulip seeds, etc..
 	Flower flowers[7] = {
-		{"Daisy", 1, 3, false},
-		{"Tulip", 1, 5, false},
-		{"Rose", 3, 8, false},
-		{"Bellflower", 1, 6, false},
-		{"Sunflower", 1, 10, false},
-		{"Lavender", 1, 7, false},
-		{"Hibiscus", 1, 9, false},
+		{"Daisy", 1, 3, false, 0},
+		{"Tulip", 1, 5, false, 0},
+		{"Rose", 3, 8, false, 0},
+		{"Bellflower", 1, 6, false, 0},
+		{"Sunflower", 1, 10, false, 0},
+		{"Lavender", 1, 7, false, 0},
+		{"Hibiscus", 1, 9, false, 0},
 	};
-	
-	cout << endl;
-	cout << "Coins " << coins << endl;
-	
-	cout << "Press enter to start " << endl;
-	//if player hits enter the game starts
-	cin.get();
-	
-	cout << "(Eden wakes up!)" << endl;
-
-	char choice;
 	string garden [5] = {
 		"Empty", "Empty", "Empty", "Empty", "Empty" };
 	int growthStage[5] = {
 		0,0,0,0,0 };
 	int day = 1; //day counter
+	
+	int startChoice;
+	cout << "1. Start a New Garden" << endl;
+	cout << "2. Load Garden" << endl;
+	cout << endl;
+	cin >> startChoice;
+	
+	if(startChoice == 1){//new game
+		cout << "Ribbit! My name is Eden the Frog! " << endl;
+		cout << endl;
+		cout << "Eden: Can you help me with my garden?" << endl;
+	}
+	else if(startChoice == 2){//load game
+		loadGame(coins, day, garden, growthStage, seedInventory, flowers);
+		cout << "Eden: Welcome back Little Frog! " << endl;
+		cout << endl;
+		cout << "Eden: The garden and I missed you so much! Ribbit! " << endl;
+	}
+	else{
+		cout << "Eden: Ribbit? That wasn't a choice silly Little Frog!" << endl;
+	}
+	
+	cout << endl;
+	cout << "Coins " << coins << endl;
+
+	char choice;
 	bool playing = true; //bool = true (yes) OR false (no)
 	
 	while(playing){
@@ -270,7 +339,7 @@ int main(){
 	cout << "-----------------"<< endl;
 	cout << endl; //add options for what Eden does
 
-	cout << "Hi little frog! What should we work on today? " << endl;
+	cout << "Eden: Hi little frog! What should we work on today? " << endl;
 	cout << "1. Look at garden" << endl;
 	cout << "2. Plant flower seeds " << endl;
 	cout << "3. Harvest flowers " << endl;
@@ -278,9 +347,9 @@ int main(){
 	cout << "5. View Inventory " << endl;
 	cout << "6. Sleep " << endl;
 	cout << "7. View Flower Journal " << endl;
-	cout << "8. Quit " << endl;
+	cout << "8. Save Game " << endl;
+	cout << "9. Quit " << endl;
 	cout << endl; 
-	cout << "(What should Eden do?)" << endl;
 	cin >> choice;
 	
 	if(choice == '1'){//option 1
@@ -305,11 +374,16 @@ int main(){
 		viewFlowerJournal(flowers);
 	}
 	else if(choice == '8'){ //option 8
-		cout << "Thanks for me with my garden! Come back soon, Ribbit!" << endl;
+		saveGame(coins, day, garden, growthStage, seedInventory, flowers);
+	}
+	else if(choice == '9'){ //option 9
+		cout << "Eden: Thanks for helping me with my garden! " << endl;
+		cout << endl;
+		cout << "Come back soon, Ribbit!" << endl;
 		playing = false;
 	}
 	else{
-		cout << "That's not a valid choice!." << endl;
+		cout << "Eden: That's not a valid choice!." << endl;
 	}
 	}
 	
